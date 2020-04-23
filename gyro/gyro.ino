@@ -8,17 +8,30 @@
 
 int gyroPin = 0;               //Gyro is connected to analog pin 0
 float gyroVoltage = 5;         //Gyro is running at 5V
-float gyroZeroVoltage = 2.5;   //Gyro is zeroed at 2.5V
+float gyroZeroVoltage = 0.0;   //Gyro is zeroed upon start calibration
 float gyroSensitivity = .007;  //Our example gyro is 7mV/deg/sec
-float rotationThreshold = 10;   //Minimum deg/sec to keep track of - helps with gyro drifting
+float rotationThreshold = 1;   //Minimum deg/sec to keep track of - helps with gyro drifting // too high -- undershoots, but better than constantly incrementing
 
 float currentAngle = 0;          //Keep track of our current angle
+float avgGyroCal = 0;
 
 void setup() {
-  Serial.begin (9600);
+  Serial.begin(9600);
+  
+  for(int i = 0; i < 10; i++) {
+    float gyroCal = (analogRead(gyroPin) * gyroVoltage) / 1023;
+    avgGyroCal += gyroCal;
+    Serial.print("cal: ");
+    Serial.println(gyroCal);
+  }
+  avgGyroCal /= 10;
+  gyroZeroVoltage = avgGyroCal;
+  
 }
 
 void loop() {
+
+  
   //This line converts the 0-1023 signal to 0-5V
   float gyroRate = (analogRead(gyroPin) * gyroVoltage) / 1023;
 
@@ -45,4 +58,7 @@ void loop() {
   Serial.println(currentAngle);
 
   delay(10);
+  
+  //float gyroRate = (analogRead(gyroPin) * gyroVoltage) / 1023;
+  //Serial.println(gyroZeroVoltage);
 }
