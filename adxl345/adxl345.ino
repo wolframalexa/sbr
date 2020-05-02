@@ -41,4 +41,11 @@ void loop() {
   Serial.print("   Za= ");
   Serial.println(Z_out);
   delay(100);
+
+  // Low-pass filter
+//  rollF = 0.94 * rollF + 0.06 * roll;
+//  pitchF = 0.94 * pitchF + 0.06 * pitch;
+
+//  roll = atan(Y_out / sqrt(pow(X_out, 2) + pow(Z_out, 2))) * 180 / PI;
+//  pitch = atan(-1 * X_out / sqrt(pow(Y_out, 2) + pow(Z_out, 2))) * 180 / PI;
 }
