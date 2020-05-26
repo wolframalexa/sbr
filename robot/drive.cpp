@@ -1,4 +1,5 @@
 #include <AccelStepper.h>
+#include <drive.h>
 
 #define motorInterfaceType 1 //external stepper driver with Step and Direction pins
 
@@ -29,11 +30,11 @@ float output = 0;
 class Motor {
 
   public:
-  
+
   Motor(int dirPin_l, int stepPin_l, int dirPin_r, int stepPin_r) {
     AccelStepper stepper_l(motorInterfaceType, stepPin_l, dirPin_l);
     AccelStepper stepper_r(motorInterfaceType, stepPin_r, dirPin_r);
-    
+
   stepper_l.setMaxSpeed(1000);
   stepper_l.setAcceleration(50);
   stepper_l.setSpeed(200);
@@ -41,12 +42,12 @@ class Motor {
   stepper_r.setMaxSpeed(1000);
   stepper_r.setAcceleration(50);
   stepper_r.setSpeed(200);
-  
 
-    if (stepper_l.distanceToGo() == 0) 
+
+    if (stepper_l.distanceToGo() == 0)
    stepper_l.moveTo(-stepper_l.currentPosition());
 
-  if (stepper_r.distanceToGo() == 0) 
+  if (stepper_r.distanceToGo() == 0)
    stepper_r.moveTo(-stepper_r.currentPosition());
 
   // Move the motor one step
@@ -54,8 +55,8 @@ class Motor {
   stepper_r.run();
   }
 
-  
-  
+
+
 
 //const int dirPin_r = 2; // = 2
 //const int stepPin_r = 3;
@@ -77,7 +78,7 @@ void runPID() {
 }
 
 void setGains() {
-  
+
 }
 
 void RunPID() {
@@ -103,7 +104,7 @@ void RunPID() {
   output = P + I + D + F;
 
   last_error = error;
- // last_time = now_time; 
+ // last_time = now_time;
 
 }
 
