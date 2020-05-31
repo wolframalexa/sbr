@@ -1,17 +1,15 @@
-#include "imu.h"
-#include "drive.cpp"
+#include "drive.h"
 
 unsigned long now_time, last_time, elapsed_time;
 
-void setup() {
+Drive drive;
 
+void setup() {
 
 }
 
 void loop() {
 
-  //RunPID();
-
-  //SetMotors(output);
+  drive.runPID(millis());
 
 }
